@@ -7,7 +7,7 @@
 
     class Core {
         protected $currentController = '';
-        protected $currentMethod = 'GET';
+        protected $currentMethod = '';
         protected $params = [];
 
         public function __construct(){
