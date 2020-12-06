@@ -3,13 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@azure/msal-browser": "^2.1.0",
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "@microsoft/microsoft-graph-client": "^2.0.0",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
-    "@testing-library/user-event": "^12.2.2",
+    "@testing-library/user-event": "^12.5.0",
+    "@types/microsoft-graph": "^1.18.0",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/reactstrap": "^8.5.1",
+    "bootstrap": "^4.5.2",
+    "moment": "^2.27.0",
+    "moment-timezone": "^0.5.31",
+    "msal": "^1.4.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
-    "web-vitals": "^0.2.4"
+    "reactstrap": "^8.5.1",
+    "web-vitals": "^0.2.4",
+    "windows-iana": "^4.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
