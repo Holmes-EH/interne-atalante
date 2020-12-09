@@ -22,12 +22,12 @@ export class App extends Component {
 				redirectUri: "http://localhost:3000",
 			},
 			cache: {
-				cacheLocation: "localStorage",
+				cacheLocation: "sessionStorage",
 				storeAuthStateInCookie: true,
 			},
 		});
 
-		var user = this.userAgentApplication.getAccount();
+		//var user = this.userAgentApplication.getAccount();
 
 		this.state = {
 			isAuthenticated: false,
@@ -141,6 +141,8 @@ export class App extends Component {
 		try {
 			var accessToken = await this.getAccessToken(config.scopes);
 
+			//console.log(accessToken);
+
 			if (accessToken) {
 				// Get the user's profile from Graph
 				var user = await getUserDetails(accessToken);
@@ -149,6 +151,7 @@ export class App extends Component {
 					user: {
 						displayName: user.displayName,
 						email: user.mail || user.userPrincipalName,
+						avatar: user.photo,
 					},
 					error: null,
 				});

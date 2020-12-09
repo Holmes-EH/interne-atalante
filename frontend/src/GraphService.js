@@ -3,6 +3,7 @@ import {
 	PageCollection,
 	PageIterator,
 } from "@microsoft/microsoft-graph-client";
+import { isAdmin } from "./Groups";
 
 var graph = require("@microsoft/microsoft-graph-client");
 
@@ -24,8 +25,18 @@ export async function getUserDetails(accessToken) {
 
 	const user = await client
 		.api("/me")
-		.select("displayName,mail,userPrincipalName")
+		.select("displayName", "mail", "userPrincipalName")
 		.get();
 
+	user.photo = await client
+		.api("/me/photo/$value")
+		.responseType("blob")
+		.get();
+
+	user.memberOf = await client.api("/me/memberOf").get();
+
+	user.isAdmin = isAdmin(user);
+
+	console.log(user);
 	return user;
 }

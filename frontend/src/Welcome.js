@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Button, Jumbotron } from "reactstrap";
 
 function WelcomeContent(props) {
@@ -6,20 +6,20 @@ function WelcomeContent(props) {
 	if (props.isAuthenticated) {
 		return (
 			<div>
-				<h4>Welcome {props.user.displayName}!</h4>
-				<p>
-					Use the navigation bar at the top of the page to get
-					started.
-				</p>
+				<h4>Bonjour {props.user.displayName}</h4>
 			</div>
 		);
 	}
 
 	// Not authenticated, present a sign in button
 	return (
-		<Button color="primary" onClick={props.authButtonMethod}>
-			Click here to sign in
-		</Button>
+		<Fragment>
+			<p>Connectez-vous avec vos identifiants</p>
+			<p>Office 365 - Cinéma l'Atalante</p>
+			<Button color="primary" onClick={props.authButtonMethod}>
+				Cliquez ici
+			</Button>
+		</Fragment>
 	);
 }
 
@@ -27,11 +27,7 @@ export default class Welcome extends Component {
 	render() {
 		return (
 			<Jumbotron>
-				<h1>React Graph Tutorial</h1>
-				<p className="lead">
-					This sample app shows how to use the Microsoft Graph API to
-					access Outlook and OneDrive data from React
-				</p>
+				<h1>Atalante - Interne</h1>
 				<WelcomeContent
 					isAuthenticated={this.props.isAuthenticated}
 					user={this.props.user}

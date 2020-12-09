@@ -1,9 +1,41 @@
+/*************************
+Author : Samuel Holmes
+Date : 2020-12-09
+Author url : samuelholmes.tech
+Domain : interne.atalante-cinema.org
+Version : 0.1
+**************************/
+
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap");
+
+:root {
+	--theme-color: #007e92;
+}
+
 body {
+	font-family: "Quicksand", sans-serif;
+	margin: 0;
 	padding-top: 4.5rem;
+}
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
 }
 
 .alert-pre {
 	word-wrap: break-word;
 	word-break: break-all;
 	white-space: pre-wrap;
+}
+
+.dropdown-menu {
+	min-width: 20rem;
+}
+
+.navbar {
+	background-color: var(--theme-color) !important;
+}
+.navbar-brand {
+	width: 2em;
 }

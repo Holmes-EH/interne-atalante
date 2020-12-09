@@ -16,13 +16,14 @@ import {
 	DropdownItem,
 } from "reactstrap";
 import "@fortawesome/fontawesome-free/css/all.css";
+import { Icon } from "./Logo.js";
 
 function UserAvatar(props) {
 	// If a user avatar is available, return an img tag with the pic
 	if (props.user.avatar) {
 		return (
 			<img
-				src={props.user.avatar}
+				src={window.URL.createObjectURL(props.user.avatar)}
 				alt="user"
 				className="rounded-circle align-self-center mr-2"
 				style={{ width: "32px" }}
@@ -57,7 +58,7 @@ function AuthNavItem(props) {
 					</p>
 					<DropdownItem divider />
 					<DropdownItem onClick={props.authButtonMethod}>
-						Sign Out
+						Déconnexion
 					</DropdownItem>
 				</DropdownMenu>
 			</UncontrolledDropdown>
@@ -72,7 +73,7 @@ function AuthNavItem(props) {
 				className="btn-link nav-link border-0"
 				color="link"
 			>
-				Sign In
+				Connexion
 			</Button>
 		</NavItem>
 	);
@@ -97,11 +98,27 @@ export default class NavBar extends Component {
 	render() {
 		// Only show calendar nav item if logged in
 		let calendarLink = null;
+		let filmsLink = null;
+		let fdcLink = null;
 		if (this.props.isAuthenticated) {
 			calendarLink = (
 				<NavItem>
 					<RouterNavLink to="/calendar" className="nav-link" exact>
-						Calendar
+						Calendrier
+					</RouterNavLink>
+				</NavItem>
+			);
+			filmsLink = (
+				<NavItem>
+					<RouterNavLink to="/films" className="nav-link" exact>
+						Films
+					</RouterNavLink>
+				</NavItem>
+			);
+			fdcLink = (
+				<NavItem>
+					<RouterNavLink to="/fdc" className="nav-link" exact>
+						Fonds de caisses
 					</RouterNavLink>
 				</NavItem>
 			);
@@ -111,20 +128,17 @@ export default class NavBar extends Component {
 			<div>
 				<Navbar color="dark" dark expand="md" fixed="top">
 					<Container>
-						<NavbarBrand href="/">React Graph Tutorial</NavbarBrand>
+						<RouterNavLink to="/" exact>
+							<NavbarBrand href="/">
+								<Icon />
+							</NavbarBrand>
+						</RouterNavLink>
 						<NavbarToggler onClick={this.toggle} />
 						<Collapse isOpen={this.state.isOpen} navbar>
 							<Nav className="mr-auto" navbar>
-								<NavItem>
-									<RouterNavLink
-										to="/"
-										className="nav-link"
-										exact
-									>
-										Home
-									</RouterNavLink>
-								</NavItem>
 								{calendarLink}
+								{filmsLink}
+								{fdcLink}
 							</Nav>
 							<Nav className="justify-content-end" navbar>
 								<NavItem>
