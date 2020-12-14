@@ -9,6 +9,7 @@ import Welcome from "./Welcome";
 import { getUserDetails } from "./GraphService";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
+import AddMovie from "./AddMovie";
 
 export class App extends Component {
 	constructor(props) {
@@ -58,7 +59,7 @@ export class App extends Component {
 						}
 						user={this.state.user}
 					/>
-					<Container>
+					<Container fluid={true}>
 						{error}
 						<Route
 							exact
@@ -72,6 +73,11 @@ export class App extends Component {
 								/>
 							)}
 						/>
+						{this.state.isAuthenticated ? (
+							<Route exact path="/films" component={AddMovie} />
+						) : (
+							<Redirect to="/" />
+						)}
 					</Container>
 				</div>
 			</Router>

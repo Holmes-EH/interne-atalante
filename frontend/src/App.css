@@ -39,3 +39,27 @@ body {
 .navbar-brand {
 	width: 2em;
 }
+.search {
+	margin: 0 auto;
+}
+.search input {
+	min-width: 320px;
+}
+.movieResults {
+	justify-content: center;
+}
+.movieCard {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	background-color: lightgray;
+	border-radius: 1em;
+	margin: 1em;
+	min-width: 220px;
+	padding: 1em;
+	max-width: 220px;
+}
+.movieCard img {
+	flex-grow: 1;
+}

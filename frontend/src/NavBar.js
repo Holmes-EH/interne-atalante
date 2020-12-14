@@ -17,6 +17,7 @@ import {
 } from "reactstrap";
 import "@fortawesome/fontawesome-free/css/all.css";
 import { Icon } from "./Logo.js";
+import AddMovie from "./AddMovie";
 
 function UserAvatar(props) {
 	// If a user avatar is available, return an img tag with the pic
@@ -135,21 +136,16 @@ export default class NavBar extends Component {
 						</RouterNavLink>
 						<NavbarToggler onClick={this.toggle} />
 						<Collapse isOpen={this.state.isOpen} navbar>
-							<Nav className="mr-auto" navbar>
+							<Nav
+								className="mr-auto"
+								navbar
+								onClick={this.toggle}
+							>
 								{calendarLink}
 								{filmsLink}
 								{fdcLink}
 							</Nav>
 							<Nav className="justify-content-end" navbar>
-								<NavItem>
-									<NavLink
-										href="https://developer.microsoft.com/graph/docs/concepts/overview"
-										target="_blank"
-									>
-										<i className="fas fa-external-link-alt mr-1"></i>
-										Docs
-									</NavLink>
-								</NavItem>
 								<AuthNavItem
 									isAuthenticated={this.props.isAuthenticated}
 									authButtonMethod={
