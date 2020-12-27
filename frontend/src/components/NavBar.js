@@ -9,7 +9,6 @@ import {
 	NavbarBrand,
 	Nav,
 	NavItem,
-	NavLink,
 	UncontrolledDropdown,
 	DropdownToggle,
 	DropdownMenu,
@@ -17,7 +16,6 @@ import {
 } from "reactstrap";
 import "@fortawesome/fontawesome-free/css/all.css";
 import { Icon } from "./Logo.js";
-import AddMovie from "./AddMovie";
 
 function UserAvatar(props) {
 	// If a user avatar is available, return an img tag with the pic
@@ -130,7 +128,7 @@ export default class NavBar extends Component {
 				<Navbar color="dark" dark expand="md" fixed="top">
 					<Container>
 						<RouterNavLink to="/" exact>
-							<NavbarBrand href="/">
+							<NavbarBrand tag="div">
 								<Icon />
 							</NavbarBrand>
 						</RouterNavLink>
@@ -139,7 +137,7 @@ export default class NavBar extends Component {
 							<Nav
 								className="mr-auto"
 								navbar
-								onClick={this.toggle}
+								// onClick={this.toggle}
 							>
 								{calendarLink}
 								{filmsLink}

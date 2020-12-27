@@ -1,8 +1,3 @@
-import moment, { Moment } from "moment";
-import {
-	PageCollection,
-	PageIterator,
-} from "@microsoft/microsoft-graph-client";
 import { isAdmin } from "./Groups";
 
 var graph = require("@microsoft/microsoft-graph-client");
@@ -37,6 +32,5 @@ export async function getUserDetails(accessToken) {
 
 	user.isAdmin = isAdmin(user);
 
-	console.log(user);
 	return user;
 }

@@ -1,15 +1,16 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { Container } from "reactstrap";
 import { UserAgentApplication } from "msal";
-import NavBar from "./NavBar";
-import config from "./Config";
-import ErrorMessage from "./ErrorMessage";
-import Welcome from "./Welcome";
-import { getUserDetails } from "./GraphService";
+import NavBar from "./components/NavBar";
+import config from "./components/Config";
+import ErrorMessage from "./components/ErrorMessage";
+import Welcome from "./components/Welcome";
+import { getUserDetails } from "./components/GraphService";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
-import AddMovie from "./AddMovie";
+import AddMovie from "./components/AddMovie";
+import MyCalendar from "./components/MyCalendar";
 
 export class App extends Component {
 	constructor(props) {
@@ -23,12 +24,10 @@ export class App extends Component {
 				redirectUri: "http://localhost:3000",
 			},
 			cache: {
-				cacheLocation: "sessionStorage",
+				cacheLocation: "localStorage",
 				storeAuthStateInCookie: true,
 			},
 		});
-
-		//var user = this.userAgentApplication.getAccount();
 
 		this.state = {
 			isAuthenticated: false,
@@ -74,7 +73,18 @@ export class App extends Component {
 							)}
 						/>
 						{this.state.isAuthenticated ? (
-							<Route exact path="/films" component={AddMovie} />
+							<Fragment>
+								<Route
+									exact
+									path="/films"
+									component={AddMovie}
+								/>
+								<Route
+									exact
+									path="/calendar"
+									component={MyCalendar}
+								/>
+							</Fragment>
 						) : (
 							<Redirect to="/" />
 						)}
@@ -146,8 +156,6 @@ export class App extends Component {
 	async getUserProfile() {
 		try {
 			var accessToken = await this.getAccessToken(config.scopes);
-
-			//console.log(accessToken);
 
 			if (accessToken) {
 				// Get the user's profile from Graph
