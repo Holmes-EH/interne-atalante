@@ -20,6 +20,8 @@
                 $this->currentController = ucwords($url[0]);
                 // Unset 0 Index
                 unset($url[0]);
+            } else {
+                $this->currentController = "index";
             }
 
             // Require the controller
@@ -35,7 +37,7 @@
             $this->params = $url ? array_values($url) : [];
 
             // Call a callback with array of params
-            call_user_func_array([$this->currentController, $this->currentMethod], $this->params);
+                call_user_func_array([$this->currentController, $this->currentMethod], $this->params);
 
         }
 
