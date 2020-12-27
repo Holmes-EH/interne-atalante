@@ -19,14 +19,16 @@ export class MyCalendar extends Component {
 			events: [],
 			eventCategory: "",
 			loading: true,
+			message: "",
 		};
 	}
 
 	componentDidMount() {
+		this.cancelTokenSource = axios.CancelToken.source();
 		this.fetchEvents();
 	}
 	componentWillUnmount() {
-		// TODO Cancel fetchEvents
+		this.cancelTokenSource.cancel();
 	}
 	render() {
 		const resourceMap = [
@@ -77,7 +79,9 @@ export class MyCalendar extends Component {
 
 	fetchEvents(category = "") {
 		axios
-			.get("https://interne-atalante.local/api/scolaires/")
+			.get("https://interne-atalante.local/api/scolaires/", {
+				cancelToken: this.cancelTokenSource.token,
+			})
 			.then((res) => {
 				let events = Object.values(res.data);
 
@@ -90,6 +94,14 @@ export class MyCalendar extends Component {
 					events: Object.values(res.data),
 					loading: false,
 				});
+			})
+			.catch((error) => {
+				if (axios.isCancel(error) || error) {
+					this.setState({
+						loading: false,
+						message: "Requête échouée. Verifier votre connection ?",
+					});
+				}
 			});
 	}
 }

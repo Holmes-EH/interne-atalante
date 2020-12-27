@@ -31,27 +31,41 @@ export class AddMovie extends Component {
 				});
 			});
 	}
+	componentWillUnmount() {
+		this.cancelTokenSource.cancel();
+	}
 	handleInputChange = (e) => {
 		const query = e.target.value.replace(/ /g, "+");
-		if (!query) {
+		if (!query || query.length < 1) {
 			this.setState({ query, results: {}, message: "" });
 		} else {
-			this.setState({ query, loading: true, message: "" }, () => {
-				this.callTmdb(query);
-			});
+			if (this.timeout) {
+				clearTimeout(this.timeout);
+				this.cancelTokenSource.cancel();
+				this.timeout = null;
+			}
+			this.timeout = setTimeout(() => {
+				this.setState({ query, loading: true, message: "" }, () => {
+					this.callTmdb(query);
+				});
+				this.timeout = null;
+			}, 1000);
 		}
 	};
+
+	cancelTokenSource = axios.CancelToken.source();
+
 	callTmdb = (query) => {
 		const searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=a1fbd782378df018ba5377e9eeb5418a&query=${query}&language=fr&page=1`;
-		if (this.cancel) {
+		if (this.cancelTokenSource) {
 			// Cancel the previous request before making a new request
-			this.cancel.cancel();
+			this.cancelTokenSource.cancel();
 		}
 		// Create a new CancelToken
-		this.cancel = axios.CancelToken.source();
+		this.cancelTokenSource = axios.CancelToken.source();
 		axios
 			.get(searchUrl, {
-				cancelToken: this.cancel.token,
+				cancelToken: this.cancelTokenSource.token,
 			})
 			.then((res) => {
 				const resultNotFoundMsg = !res.data.results.length
@@ -133,6 +147,15 @@ export class AddMovie extends Component {
 						/>
 					</label>
 				</Row>
+				{this.state.message.length > 0 && (
+					<Row className="movieResults">
+						<Col>
+							<p style={{ textAlign: "center" }}>
+								{this.state.message}
+							</p>
+						</Col>
+					</Row>
+				)}
 				{this.renderSearchResults()}
 			</div>
 		);
