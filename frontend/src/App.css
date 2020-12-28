@@ -44,6 +44,9 @@ body {
 }
 .search input {
 	min-width: 320px;
+	border: 1px solid gray;
+	border-radius: 0.4em;
+	padding-left: 0.4em;
 }
 .movieResults {
 	justify-content: center;

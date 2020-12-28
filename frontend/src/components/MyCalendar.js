@@ -79,9 +79,18 @@ export class MyCalendar extends Component {
 
 	fetchEvents(category = "") {
 		axios
-			.get("https://interne-atalante.local/api/scolaires/", {
-				cancelToken: this.cancelTokenSource.token,
-			})
+			.get(
+				"https://interne-atalante.local/api/scolaires/",
+				{
+					headers: {
+						Authorization: `Bearer ${this.props.idToken}`,
+					},
+					crossdomain: true,
+				},
+				{
+					cancelToken: this.cancelTokenSource.token,
+				}
+			)
 			.then((res) => {
 				let events = Object.values(res.data);
 

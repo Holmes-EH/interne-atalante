@@ -31,6 +31,7 @@ export class App extends Component {
 
 		this.state = {
 			isAuthenticated: false,
+			idToken: "",
 			user: {},
 			error: null,
 		};
@@ -77,12 +78,22 @@ export class App extends Component {
 								<Route
 									exact
 									path="/films"
-									component={AddMovie}
+									render={(props) => (
+										<AddMovie
+											{...props}
+											idToken={this.state.idToken}
+										/>
+									)}
 								/>
 								<Route
 									exact
 									path="/calendar"
-									component={MyCalendar}
+									render={(props) => (
+										<MyCalendar
+											{...props}
+											idToken={this.state.idToken}
+										/>
+									)}
 								/>
 							</Fragment>
 						) : (
@@ -134,7 +145,9 @@ export class App extends Component {
 					scopes: config.scopes,
 				}
 			);
-
+			this.setState({
+				idToken: silentResult.idToken.rawIdToken,
+			});
 			return silentResult.accessToken;
 		} catch (err) {
 			// If a silent request fails, it may be because the user needs
@@ -145,7 +158,9 @@ export class App extends Component {
 						scopes: config.scopes,
 					}
 				);
-
+				this.setState({
+					idToken: interactiveResult.idToken.rawIdToken,
+				});
 				return interactiveResult.accessToken;
 			} else {
 				throw err;
@@ -162,6 +177,7 @@ export class App extends Component {
 				var user = await getUserDetails(accessToken);
 				this.setState({
 					isAuthenticated: true,
+					token: accessToken,
 					user: {
 						displayName: user.displayName,
 						email: user.mail || user.userPrincipalName,
